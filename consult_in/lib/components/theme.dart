@@ -17,6 +17,7 @@ Map<int, Color> color = {
 var mycolor = HexColor("#057C82");
 var mysecondcolor = HexColor("#E3F5EE");
 var mythirdcolor = HexColor("#4B907C");
+var mystarcolor = HexColor("#EEE8A9");
 var theme = ThemeData(
   primarySwatch: MaterialColor(
     0xff057c82,

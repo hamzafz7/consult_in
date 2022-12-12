@@ -4,13 +4,13 @@ import 'package:flutter/cupertino.dart';
 
 import '../presentation/screens/onboardingscreen/onboarding_model.dart';
 
-Widget getheigthspace(h) {
+Widget getheigthspace(double? h) {
   return SizedBox(
     height: h,
   );
 }
 
-Widget getwidthspace(w) {
+Widget getwidthspace(double? w) {
   return SizedBox(
     width: w,
   );

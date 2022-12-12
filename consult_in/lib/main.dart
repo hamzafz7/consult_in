@@ -1,9 +1,11 @@
 import 'package:consult_in/components/theme.dart';
+import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/presentation/screens/Expertregisterscreen/expert_register.dart';
 import 'package:consult_in/presentation/screens/IntroRegisterScreen/intro_register.dart';
 import 'package:consult_in/presentation/screens/auth/log_in.dart';
+import 'package:consult_in/presentation/screens/expertsscreen/experts_screen.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'presentation/screens/splashscreen/splash_screen.dart';
 
 void main() {
@@ -16,17 +18,20 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      routes: {
-        '/': (context) => SplashScreen(),
-        'home': (context) => const Homepage(),
-        'intro': (context) => const IntroRegisterScreen(),
-        'login': (context) => const SigninScreen(),
-        'expertregister': (context) => const ExpertRegisterScreen(),
-        'introregister': (context) => const IntroRegisterScreen()
-      },
-      theme: theme,
+    return BlocProvider(
+      create: ((context) => ConsultAppCubit()),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        routes: {
+          '/': (context) => ExpertsScreen(),
+          'home': (context) => const Homepage(),
+          'intro': (context) => const IntroRegisterScreen(),
+          'login': (context) => const SigninScreen(),
+          'expertregister': (context) => const ExpertRegisterScreen(),
+          'introregister': (context) => const IntroRegisterScreen()
+        },
+        theme: theme,
+      ),
     );
   }
 }
