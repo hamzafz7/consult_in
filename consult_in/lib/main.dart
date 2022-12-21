@@ -1,15 +1,15 @@
 import 'package:consult_in/components/theme.dart';
+import 'package:consult_in/data/diohelper/diohelper.dart';
 import 'package:consult_in/logic/bloc/appcubit.dart';
-import 'package:consult_in/presentation/screens/Expertregisterscreen/expert_register.dart';
+import 'package:consult_in/presentation/screens/auth/expert_register.dart';
 import 'package:consult_in/presentation/screens/IntroRegisterScreen/intro_register.dart';
 import 'package:consult_in/presentation/screens/auth/log_in.dart';
-import 'package:consult_in/presentation/screens/expertsscreen/experts_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'presentation/screens/splashscreen/splash_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  DioHelper.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,11 +23,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => ExpertsScreen(),
+          '/': (context) => const SigninScreen(),
           'home': (context) => const Homepage(),
           'intro': (context) => const IntroRegisterScreen(),
           'login': (context) => const SigninScreen(),
-          'expertregister': (context) => const ExpertRegisterScreen(),
+          'expertregister': (context) => const SignupexpertScreen(),
           'introregister': (context) => const IntroRegisterScreen()
         },
         theme: theme,

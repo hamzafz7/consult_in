@@ -18,7 +18,7 @@ class ExpertsScreen extends StatelessWidget {
         body: ListView.builder(
           //   shrinkWrap: true,
           //   physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: ((context, index) => ExpertItemBuilder()),
+          itemBuilder: ((context, index) => const ExpertItemBuilder()),
           itemCount: 6,
         )
         //],
