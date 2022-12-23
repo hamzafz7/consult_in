@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   DioHelper.init();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => const SigninScreen(),
+          '/': (context) => const SignupexpertScreen(),
           'home': (context) => const Homepage(),
           'intro': (context) => const IntroRegisterScreen(),
           'login': (context) => const SigninScreen(),
