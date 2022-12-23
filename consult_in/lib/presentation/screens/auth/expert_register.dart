@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupexpertScreen extends StatefulWidget {
   const SignupexpertScreen({Key? key}) : super(key: key);
@@ -18,6 +21,16 @@ class _SignupexpertScreenState extends State<SignupexpertScreen> {
     'Business'
   ];
   String? selectedItem = 'The consult type you provide';
+  File? path;
+  Future imagepick(ImageSource source) async {
+    final image = await ImagePicker().pickImage(source: source);
+    if (image == null) return;
+    File? path1 = File(image.path);
+    setState(() {
+      path = path1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,13 +48,20 @@ class _SignupexpertScreenState extends State<SignupexpertScreen> {
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [
-                        const CircleAvatar(
-                          radius: 50,
-                          backgroundImage:
-                              AssetImage("assets/images/loginpic.png"),
-                        ),
+                        path == null
+                            ? const CircleAvatar(
+                                radius: 80,
+                                backgroundImage:
+                                    AssetImage("assets/images/loginpic.png"),
+                              )
+                            : CircleAvatar(
+                                radius: 80,
+                                backgroundImage: FileImage(path!),
+                              ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            imagepick(ImageSource.gallery);
+                          },
                           icon: const Icon(
                             Icons.camera_alt,
                             size: 40,

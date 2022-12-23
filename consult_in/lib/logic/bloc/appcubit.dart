@@ -29,4 +29,29 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
       emit(ErrorLoginState(error.toString()));
     });
   }
+
+  void userRegister(
+      {required String email,
+      required String password,
+      required name,
+      required phone}) async {
+    emit(LoadingLoginState());
+    await DioHelper.post(url: userregister, query: {
+      "email": email,
+      "password": password,
+      "name": name,
+      "role": 0,
+      "password_confirmation": password,
+      "phone": phone
+    }).then((value) {
+      print(value.data);
+      //   homeloginmodel = HomeLoginModel.fromJson(value.data);
+      // print(homeloginmodel!.access_token);
+
+      emit(SuccessLoginState());
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      emit(ErrorLoginState(error.toString()));
+    });
+  }
 }
