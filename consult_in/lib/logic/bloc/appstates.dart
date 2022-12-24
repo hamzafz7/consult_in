@@ -12,3 +12,21 @@ class ErrorLoginState extends ConsultAppStates {
   final error;
   ErrorLoginState(this.error);
 }
+
+class LoadingExpertRegisterState extends ConsultAppStates {}
+
+class SuccessExpertRegisterState extends ConsultAppStates {}
+
+class ErrorExpertRegisterState extends ConsultAppStates {
+  final error;
+  ErrorExpertRegisterState(this.error);
+}
+
+class LoadingUserRegisterState extends ConsultAppStates {}
+
+class SuccessUserRegisterState extends ConsultAppStates {}
+
+class ErrorUserRegisterState extends ConsultAppStates {
+  final error;
+  ErrorUserRegisterState(this.error);
+}

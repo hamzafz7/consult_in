@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:bloc/bloc.dart';
 import 'package:consult_in/data/diohelper/diohelper.dart';
 import 'package:consult_in/data/models/homeloginmodel.dart';
@@ -14,15 +17,15 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
   }
 
   HomeLoginModel? homeloginmodel;
-  void userlogin({required String email, required String password}) async {
+  Future<void> userlogin(
+      {required String email, required String password}) async {
     emit(LoadingLoginState());
     await DioHelper.post(
         url: login,
         query: {"email": email, "password": password}).then((value) {
-      print(value.data);
-      //   homeloginmodel = HomeLoginModel.fromJson(value.data);
-      // print(homeloginmodel!.access_token);
-
+      homeloginmodel = HomeLoginModel.fromJson(value.data);
+      // print(value.data);
+      print(homeloginmodel!.message);
       emit(SuccessLoginState());
     }).onError((error, stackTrace) {
       print(error.toString());
@@ -35,7 +38,7 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
       required String password,
       required name,
       required phone}) async {
-    emit(LoadingLoginState());
+    emit(LoadingUserRegisterState());
     await DioHelper.post(url: userregister, query: {
       "email": email,
       "password": password,
@@ -48,10 +51,38 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
       //   homeloginmodel = HomeLoginModel.fromJson(value.data);
       // print(homeloginmodel!.access_token);
 
-      emit(SuccessLoginState());
+      emit(SuccessUserRegisterState());
     }).onError((error, stackTrace) {
       print(error.toString());
-      emit(ErrorLoginState(error.toString()));
+      emit(ErrorUserRegisterState(error.toString()));
+    });
+  }
+
+  void useregister(
+      {required String email,
+      required String password,
+      required name,
+      required phone,
+      File? image,
+      required address}) async {
+    emit(LoadingUserRegisterState());
+    await DioHelper.post(url: userregister, query: {
+      "photo_path": image,
+      "email": email,
+      "password": password,
+      "name": name,
+      "role": 1,
+      "password_confirmation": password,
+      "phone": phone
+    }).then((value) {
+      print(value.data);
+      //   homeloginmodel = HomeLoginModel.fromJson(value.data);
+      // print(homeloginmodel!.access_token);
+
+      emit(SuccessUserRegisterState());
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      emit(ErrorUserRegisterState(error.toString()));
     });
   }
 }
