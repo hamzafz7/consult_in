@@ -1,6 +1,8 @@
+import 'package:consult_in/components/constants.dart';
 import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
 import 'package:consult_in/presentation/widgets/TextFormFeildBuilder.dart';
+import 'package:consult_in/sharedpref/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -20,7 +22,23 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ConsultAppCubit, ConsultAppStates>(
-      listener: (context, state) {},
+      listener: (context, state) async {
+        if (state is SuccessLoginState) {
+          if (BlocProvider.of<ConsultAppCubit>(context)
+                  .homeloginmodel!
+                  .message ==
+              "successfully login") {
+            await SharedPref.setbool(key: "islogin", value: true);
+            await SharedPref.setstring(
+                key: "username",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .user!
+                    .name!);
+            gotonextpage(context, "homescreen");
+          }
+        }
+      },
       builder: (context, state) => Scaffold(
         backgroundColor: const Color.fromRGBO(230, 244, 241, 1),
         body: Form(
@@ -81,7 +99,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         prefixicon: const Icon(Icons.email),
                         hinttext: "enter your email",
                         validate: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return "Email should not be empty";
                           }
                           return null;
@@ -104,7 +122,7 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                         controller: passwordcontroller,
                         validate: (value) {
-                          if (value == null) {
+                          if (value!.isEmpty) {
                             return "password should not be empty";
                           }
                           return null;
@@ -127,18 +145,15 @@ class _SigninScreenState extends State<SigninScreen> {
                   Container(
                     margin: const EdgeInsets.only(top: 2, right: 20),
                     alignment: Alignment.centerRight,
-                    child: GestureDetector(
-                      child: TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forgot Password?',
-                          style: TextStyle(
-                            fontSize: 15.0,
-                            color: Color(0xff324B4D),
-                          ),
+                    child: TextButton(
+                      onPressed: () {},
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Color(0xff324B4D),
                         ),
                       ),
-                      onTap: () => {},
                     ),
                   ),
                   Container(
@@ -152,9 +167,13 @@ class _SigninScreenState extends State<SigninScreen> {
                     ),
                     child: TextButton(
                       onPressed: () {
-                        BlocProvider.of<ConsultAppCubit>(context).userlogin(
-                            email: emailcontroller.text,
-                            password: passwordcontroller.text);
+                        if (formkey.currentState!.validate()) {
+                          BlocProvider.of<ConsultAppCubit>(context)
+                              .userlogin(
+                                  email: emailcontroller.text,
+                                  password: passwordcontroller.text)
+                              .then((value) {});
+                        }
                       },
                       child: const Text(
                         'LOGIN',
@@ -177,7 +196,9 @@ class _SigninScreenState extends State<SigninScreen> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          gotonextpage(context, "intro");
+                        },
                         child: const Text(
                           'Register Now',
                           style: TextStyle(

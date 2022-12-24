@@ -1,6 +1,7 @@
 import 'package:consult_in/components/theme.dart';
 import 'package:consult_in/presentation/widgets/MaterialButtonBuilder.dart';
 import 'package:consult_in/presentation/widgets/PageViewBuilder.dart';
+import 'package:consult_in/sharedpref/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../components/constants.dart';
@@ -65,15 +66,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                               const BorderRadius.all(Radius.circular(30)),
                           child: MaterialButtonBuilder(
                             color: mycolor,
-                            onpressed: (() {
-                              if (islast) {
-                                gotonextpage(context, "login");
-                              } else {
-                                pagecontroller.nextPage(
-                                    duration:
-                                        const Duration(microseconds: 1000),
-                                    curve: Curves.fastLinearToSlowEaseIn);
-                              }
+                            onpressed: (() async {
+                              SharedPref.setbool(key: "isopened", value: true);
+                              gotonextpage(context, "login");
+
+                              //  if (islast) {
+                              //        gotonextpage(context, "login");
+                              // } else {
+                              //    pagecontroller.nextPage(
+                              //         duration:
+                              //            const Duration(microseconds: 1000),
+                              //      curve: Curves.fastLinearToSlowEaseIn);
                             }),
                             height: h * 0.058,
                             width: w * 0.5,
@@ -88,9 +91,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                       children: [
                         TextButton(
                           child: const Text("Skip"),
-                          onPressed: () {
-                            gotonextpage(context, 'intro');
-                          },
+                          onPressed: () {},
                         ),
                         const Spacer(),
                         ClipRRect(

@@ -4,10 +4,21 @@ import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/presentation/screens/auth/expert_register.dart';
 import 'package:consult_in/presentation/screens/IntroRegisterScreen/intro_register.dart';
 import 'package:consult_in/presentation/screens/auth/log_in.dart';
+import 'package:consult_in/presentation/screens/auth/user_register.dart';
+import 'package:consult_in/presentation/screens/homescreen/home_screen.dart';
+import 'package:consult_in/presentation/screens/splashscreen/splash_screen.dart';
+import 'package:consult_in/sharedpref/shared_pref.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+bool isopened = false, islogin = false;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPref.init();
+  isopened = SharedPref.getbool(key: "isopened") ?? false;
+  //islogin = SharedPref.getbool(key: "islogin") ?? false;
+  print(islogin);
+
   DioHelper.init();
   runApp(const MyApp());
 }
@@ -23,50 +34,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         routes: {
-          '/': (context) => const SignupexpertScreen(),
-          'home': (context) => const Homepage(),
-          'intro': (context) => const IntroRegisterScreen(),
+          '/': (context) => SplashScreen(
+                islogin: islogin,
+                isopen: isopened,
+              ),
+          "homescreen": (context) => HomeScreen(),
+          "userregister": ((context) => SignupScreen()),
+          'intro': (context) => IntroRegisterScreen(),
           'login': (context) => const SigninScreen(),
           'expertregister': (context) => const SignupexpertScreen(),
-          'introregister': (context) => const IntroRegisterScreen()
         },
         theme: theme,
-      ),
-    );
-  }
-}
-
-class Homepage extends StatelessWidget {
-  const Homepage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: Container(
-                  padding: const EdgeInsets.all(8),
-                  height: 50,
-                  color: mysecondcolor,
-                  child: TextFormField(
-                    showCursor: true,
-                    decoration: const InputDecoration(
-                        hintText: "Enter your email",
-                        icon: Icon(Icons.email),
-                        border: InputBorder.none),
-                  )),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: mycolor,
-        onPressed: () {},
       ),
     );
   }

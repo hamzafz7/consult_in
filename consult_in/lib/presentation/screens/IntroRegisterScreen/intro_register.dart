@@ -5,10 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 class IntroRegisterScreen extends StatelessWidget {
-  const IntroRegisterScreen({super.key});
-
+  IntroRegisterScreen({super.key});
+  var h, w;
   @override
   Widget build(BuildContext context) {
+    h = MediaQuery.of(context).size.height;
+    w = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: mysecondcolor,
       body: Column(children: [
@@ -21,15 +24,16 @@ class IntroRegisterScreen extends StatelessWidget {
         ),
         Padding(
           padding: const EdgeInsets.all(20.0),
-          child: AnimatedTextKit(animatedTexts: [
+          child: AnimatedTextKit(totalRepeatCount: 1, animatedTexts: [
             TyperAnimatedText("Welcome !",
-                textStyle: Theme.of(context).textTheme.headline2),
+                textStyle: Theme.of(context).textTheme.headline2,
+                speed: const Duration(milliseconds: 100)),
             TyperAnimatedText("WE are Happy to have you",
-                textStyle: Theme.of(context).textTheme.headline2),
-            TyperAnimatedText(
-              "How would you like to Register ?",
-              textStyle: Theme.of(context).textTheme.headline2,
-            ),
+                textStyle: Theme.of(context).textTheme.headline2,
+                speed: const Duration(milliseconds: 100)),
+            TyperAnimatedText("How would you like to Register ?",
+                textStyle: Theme.of(context).textTheme.headline2,
+                speed: const Duration(milliseconds: 100)),
           ]),
         ),
         getheigthspace(h * 0.07),
@@ -54,7 +58,9 @@ class IntroRegisterScreen extends StatelessWidget {
           child: MaterialButtonBuilder(
               Child: "As User",
               height: h * 0.06,
-              onpressed: () {},
+              onpressed: () {
+                gotonextpage(context, "userregister");
+              },
               width: w * 0.8,
               color: mycolor,
               textStyle: Theme.of(context)
