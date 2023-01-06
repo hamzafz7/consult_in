@@ -20,7 +20,9 @@ class DioHelper {
   static Future<Response> post(
       {required String url,
       Map<String, dynamic>? query,
-      Map<String, dynamic>? body}) async {
-    return await dio!.post(url, queryParameters: query, data: body);
+      var body,
+      Map<String, dynamic>? header}) async {
+    return await dio!.post(url,
+        queryParameters: query, data: body, options: Options(headers: header));
   }
 }

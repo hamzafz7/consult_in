@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:consult_in/data/diohelper/diohelper.dart';
 import 'package:consult_in/data/models/homeloginmodel.dart';
@@ -23,7 +21,7 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
     await DioHelper.post(
         url: login,
         query: {"email": email, "password": password}).then((value) {
-      homeloginmodel = HomeLoginModel.fromJson(value.data);
+      homeloginmodel = HomeLoginModel.fromJson(jsonDecode((value.data)));
       // print(value.data);
       print(homeloginmodel!.message);
       emit(SuccessLoginState());
@@ -47,9 +45,8 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
       "password_confirmation": password,
       "phone": phone
     }).then((value) {
+      homeloginmodel = HomeLoginModel.fromJson(value.data);
       print(value.data);
-      //   homeloginmodel = HomeLoginModel.fromJson(value.data);
-      // print(homeloginmodel!.access_token);
 
       emit(SuccessUserRegisterState());
     }).onError((error, stackTrace) {
@@ -58,31 +55,44 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
     });
   }
 
-  void useregister(
+  void expertregister(
       {required String email,
       required String password,
       required name,
       required phone,
-      File? image,
-      required address}) async {
-    emit(LoadingUserRegisterState());
-    await DioHelper.post(url: userregister, query: {
-      "photo_path": image,
-      "email": email,
-      "password": password,
-      "name": name,
-      "role": 1,
-      "password_confirmation": password,
-      "phone": phone
-    }).then((value) {
-      print(value.data);
-      //   homeloginmodel = HomeLoginModel.fromJson(value.data);
-      // print(homeloginmodel!.access_token);
+      required data,
+      required address,
+      required experience,
+      required id,
+      required cost}) async {
+    List uncoded = [
+      {"experience_id": id, "description": experience, "cost": cost}
+    ];
+    var coded = jsonEncode(uncoded);
 
-      emit(SuccessUserRegisterState());
+    emit(LoadingExpertRegisterState());
+    await DioHelper.post(
+        url: userregister,
+        query: {
+          "email": email,
+          "password": password,
+          "name": name,
+          "role": 1,
+          "password_confirmation": password,
+          "phone": phone,
+          "address": address,
+          "experience_expert": coded
+        },
+        body: data,
+        header: {"Content-Type": "multipart/form-data"}).then((value) {
+      print(value.data);
+      homeloginmodel = HomeLoginModel.fromJson(value.data);
+      print(homeloginmodel!.user!.email);
+      emit(SuccessExpertRegisterState());
     }).onError((error, stackTrace) {
+      print("heeloo");
       print(error.toString());
-      emit(ErrorUserRegisterState(error.toString()));
+      emit(ErrorExpertRegisterState(error.toString()));
     });
   }
 }

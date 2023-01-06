@@ -1,7 +1,5 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
-import 'dart:ffi';
-
 import 'package:consult_in/components/theme.dart';
 import 'package:consult_in/sharedpref/shared_pref.dart';
 import 'package:flutter/material.dart';
@@ -49,43 +47,46 @@ List<OnBoardingModel> pages = [
           "Consult-in assures that no one can see the existing conversations between the specialist and the user"),
 ];
 Widget CategoryItemBuilder(String img, String text) {
-  return Padding(
-      padding: const EdgeInsets.all(5),
-      child: Container(
-          decoration: BoxDecoration(
-              color: mysecondcolor,
-              border: Border.all(color: mycolor),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              boxShadow: [
-                BoxShadow(
-                  color: Color(0xff057c82),
-                  blurRadius: 6,
-                  spreadRadius: 2,
+  return GestureDetector(
+    onTap: () {},
+    child: Padding(
+        padding: const EdgeInsets.all(5),
+        child: Container(
+            decoration: BoxDecoration(
+                color: mysecondcolor,
+                border: Border.all(color: mycolor),
+                borderRadius: const BorderRadius.all(Radius.circular(20)),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xff057c82),
+                    blurRadius: 6,
+                    spreadRadius: 2,
+                  ),
+                ]),
+            margin: const EdgeInsets.all(4),
+            height: 20,
+            width: 20,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Column(children: [
+                CircleAvatar(
+                    radius: 40,
+                    backgroundColor: const Color(0xffE6F4F1),
+                    backgroundImage: AssetImage(
+                      img,
+                    )),
+                Text(
+                  text,
+                  style: const TextStyle(
+                    color: Color(0xff057c82),
+                    letterSpacing: 2,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ]),
-          margin: EdgeInsets.all(4),
-          height: 20,
-          width: 20,
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(children: [
-              CircleAvatar(
-                  radius: 40,
-                  backgroundColor: Color(0xffE6F4F1),
-                  backgroundImage: AssetImage(
-                    img,
-                  )),
-              Text(
-                text,
-                style: TextStyle(
-                  color: Color(0xff057c82),
-                  letterSpacing: 2,
-                  fontSize: 15,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ]),
-          )));
+            ))),
+  );
 }
 
 List categoriesnames = [
@@ -102,4 +103,8 @@ List catrgoriesphotos = [
   'assets/images/business1.png',
   'assets/images/vocational.png'
 ];
+List categories_id = [1, 5, 4, 2, 3];
 String username = SharedPref.getstring(key: "username") ?? "";
+String userphoto = SharedPref.getstring(key: "userphoto") ?? "";
+
+String userrole = SharedPref.getstring(key: "userrole") ?? "";

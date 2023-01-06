@@ -15,10 +15,9 @@ bool isopened = false, islogin = false;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPref.init();
+  SharedPref.setbool(key: "islogin", value: false);
   isopened = SharedPref.getbool(key: "isopened") ?? false;
-  //islogin = SharedPref.getbool(key: "islogin") ?? false;
-  print(islogin);
-
+  islogin = SharedPref.getbool(key: "islogin") ?? false;
   DioHelper.init();
   runApp(const MyApp());
 }
@@ -39,7 +38,7 @@ class MyApp extends StatelessWidget {
                 isopen: isopened,
               ),
           "homescreen": (context) => HomeScreen(),
-          "userregister": ((context) => SignupScreen()),
+          " ": ((context) => SignupScreen()),
           'intro': (context) => IntroRegisterScreen(),
           'login': (context) => const SigninScreen(),
           'expertregister': (context) => const SignupexpertScreen(),

@@ -36,6 +36,7 @@ class _SigninScreenState extends State<SigninScreen> {
                     .user!
                     .name!);
             gotonextpage(context, "homescreen");
+            print("hii");
           }
         }
       },

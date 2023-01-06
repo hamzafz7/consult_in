@@ -23,4 +23,12 @@ class SharedPref {
   static String? getstring({required String key}) {
     return sharedPreferences!.getString(key);
   }
+
+  static Future<bool> setint({required String key, required int value}) async {
+    return await sharedPreferences!.setInt(key, value);
+  }
+
+  static int? getint({required String key}) {
+    return sharedPreferences!.getInt(key);
+  }
 }
