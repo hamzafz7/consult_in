@@ -58,18 +58,21 @@ class _SignupexpertScreenState extends State<SignupexpertScreen> {
         if (BlocProvider.of<ConsultAppCubit>(context).homeloginmodel!.message ==
             "User successfully registered") {
           await SharedPref.setbool(key: "islogin", value: true);
-          await SharedPref.setstring(
-              key: "username",
-              value: BlocProvider.of<ConsultAppCubit>(context)
-                  .homeloginmodel!
-                  .user!
-                  .name!);
-          await SharedPref.setstring(
-              key: "userphoto",
-              value: BlocProvider.of<ConsultAppCubit>(context)
-                  .homeloginmodel!
-                  .user!
-                  .photo_path!);
+          if (BlocProvider.of<ConsultAppCubit>(context).homeloginmodel !=
+              null) {
+            await SharedPref.setstring(
+                key: "username",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .user!
+                    .name!);
+            await SharedPref.setstring(
+                key: "userphoto",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .user!
+                    .photo_path!);
+          }
 
           gotonextpage(context, "homescreen");
         }

@@ -1,9 +1,11 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:consult_in/components/theme.dart';
+import 'package:consult_in/presentation/screens/expertsscreen/experts_screen.dart';
 import 'package:consult_in/sharedpref/shared_pref.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:consult_in/logic/bloc/appcubit.dart';
 import '../presentation/screens/onboardingscreen/onboarding_model.dart';
 
 Widget getheigthspace(double h) {
@@ -19,7 +21,7 @@ Widget getwidthspace(double w) {
 }
 
 gotonextpage(context, String name) {
-  Navigator.pushReplacementNamed(context, name);
+  Navigator.pushNamed(context, name);
 }
 
 var h, w;
@@ -46,9 +48,17 @@ List<OnBoardingModel> pages = [
       body:
           "Consult-in assures that no one can see the existing conversations between the specialist and the user"),
 ];
-Widget CategoryItemBuilder(String img, String text) {
+// ignore: non_constant_identifier_names
+Widget CategoryItemBuilder(String img, String text, context, index) {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      BlocProvider.of<ConsultAppCubit>(context).getexperts(index + 1);
+      Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: ((context) =>
+                  ExpertsScreen(exp_type: categoriesnames[index]))));
+    },
     child: Padding(
         padding: const EdgeInsets.all(5),
         child: Container(
@@ -103,8 +113,7 @@ List catrgoriesphotos = [
   'assets/images/business1.png',
   'assets/images/vocational.png'
 ];
-List categories_id = [1, 5, 4, 2, 3];
+List categories_id = [1, 2, 3, 4, 5];
 String username = SharedPref.getstring(key: "username") ?? "";
 String userphoto = SharedPref.getstring(key: "userphoto") ?? "";
-
 String userrole = SharedPref.getstring(key: "userrole") ?? "";

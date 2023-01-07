@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:consult_in/data/diohelper/diohelper.dart';
+import 'package:consult_in/data/models/expertmodel.dart';
 import 'package:consult_in/data/models/homeloginmodel.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -87,12 +88,30 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
         header: {"Content-Type": "multipart/form-data"}).then((value) {
       print(value.data);
       homeloginmodel = HomeLoginModel.fromJson(value.data);
-      print(homeloginmodel!.user!.email);
       emit(SuccessExpertRegisterState());
     }).onError((error, stackTrace) {
-      print("heeloo");
       print(error.toString());
       emit(ErrorExpertRegisterState(error.toString()));
+    });
+  }
+
+  List<ExpertModel> exp_experts = [];
+  getexperts(int id) async {
+    emit(GetExpertsLoadingState());
+    return await DioHelper.get(url: experts, query: {"experience_id": id})
+        .then((value) {
+      var coded = value.data;
+      //  print(value.data);
+      //   List<Map<String, dynamic>> coded = jsonDecode(value.data.toString());
+      // print(coded);
+      coded.forEach((e) {
+        exp_experts.add(ExpertModel.fromJson(e));
+      });
+      print(exp_experts[0].address);
+      emit(GetExpertsSuccessState());
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      emit(GetExpertsErrorState());
     });
   }
 }

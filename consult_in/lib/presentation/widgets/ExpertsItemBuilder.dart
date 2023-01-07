@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:consult_in/components/constants.dart';
 import 'package:consult_in/components/theme.dart';
+import 'package:consult_in/data/models/expertmodel.dart';
 import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ExpertItemBuilder extends StatelessWidget {
-  const ExpertItemBuilder({super.key});
+  ExpertModel model;
+  ExpertItemBuilder({super.key, required this.model});
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +28,12 @@ class ExpertItemBuilder extends StatelessWidget {
             width: w,
             height: h * 0.2,
             decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(blurRadius: 2, spreadRadius: 2, color: Colors.grey)
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0xff057c82),
+                    blurRadius: 3,
+                    spreadRadius: 0.5,
+                  ),
                 ],
                 border: Border.all(color: mycolor),
                 color: mysecondcolor,
@@ -35,20 +43,15 @@ class ExpertItemBuilder extends StatelessWidget {
               Expanded(
                   child: Row(
                 children: [
-                  ClipRRect(
-                      borderRadius: BorderRadius.all(Radius.circular(50)),
-                      child: Image.asset(
-                        "assets/images/doctor.jpg",
-                        width: w * 0.19,
-                        height: h * 0.09,
-                        fit: BoxFit.cover,
-                      )),
+                  CircleAvatar(
+                      radius: 30,
+                      backgroundImage: MemoryImage(base64Decode(model.photo!))),
                   getwidthspace(10),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Ahmed Jamil",
+                        "${model.name}",
                         style: Theme.of(context)
                             .textTheme
                             .headline4!
@@ -70,28 +73,22 @@ class ExpertItemBuilder extends StatelessWidget {
                     ],
                   ),
                   const Spacer(),
-                  Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(color: mycolor),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: CircleAvatar(
-                        backgroundColor:
-                            BlocProvider.of<ConsultAppCubit>(context)
-                                    .isfavourite
-                                ? mycolor
-                                : mysecondcolor,
-                        child: IconButton(
-                          icon: Icon(Icons.favorite,
-                              color: BlocProvider.of<ConsultAppCubit>(context)
-                                      .isfavourite
-                                  ? mysecondcolor
-                                  : mycolor),
-                          onPressed: (() {
-                            BlocProvider.of<ConsultAppCubit>(context)
-                                .changefavourie();
-                          }),
-                        ),
-                      ))
+                  IconButton(
+                    icon: BlocProvider.of<ConsultAppCubit>(context).isfavourite
+                        ? const Icon(
+                            Icons.favorite,
+                            size: 37,
+                          )
+                        : const Icon(
+                            Icons.favorite_border,
+                            size: 35,
+                          ),
+                    color: mycolor,
+                    onPressed: (() {
+                      BlocProvider.of<ConsultAppCubit>(context)
+                          .changefavourie();
+                    }),
+                  )
                 ],
               )),
               Expanded(
@@ -104,7 +101,7 @@ class ExpertItemBuilder extends StatelessWidget {
                       style: TextStyle(color: mycolor),
                     ),
                     Text(
-                      "192",
+                      "${model.cost}",
                       style: TextStyle(color: Colors.grey[400]),
                     )
                   ],

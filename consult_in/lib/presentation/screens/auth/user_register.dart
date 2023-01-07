@@ -1,10 +1,12 @@
+import 'package:consult_in/components/constants.dart';
 import 'package:consult_in/components/theme.dart';
 import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
-import 'package:consult_in/presentation/screens/auth/expert_register.dart';
 import 'package:consult_in/presentation/widgets/TextFormFeildBuilder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../sharedpref/shared_pref.dart';
 
 class SignupScreen extends StatefulWidget {
   SignupScreen({Key? key}) : super(key: key);
@@ -22,8 +24,14 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ConsultAppCubit, ConsultAppStates>(
-      listener: (context, state) {
-        // TODO: implement listener
+      listener: (context, state) async {
+        await SharedPref.setstring(
+            key: "username",
+            value: BlocProvider.of<ConsultAppCubit>(context)
+                .homeloginmodel!
+                .user!
+                .name!);
+        gotonextpage(context, "homescreen");
       },
       builder: (context, state) {
         return Scaffold(

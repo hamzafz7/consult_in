@@ -22,8 +22,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     h = MediaQuery.of(context).size.height;
     w = MediaQuery.of(context).size.height;
-    print(userphoto);
-    print(userrole);
     return BlocConsumer<ConsultAppCubit, ConsultAppStates>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -182,7 +180,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               5,
                               ((index) => CategoryItemBuilder(
                                   catrgoriesphotos[index],
-                                  categoriesnames[index]))))),
+                                  categoriesnames[index],
+                                  context,
+                                  index))))),
                 )
               ]),
             ),

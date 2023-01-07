@@ -29,7 +29,7 @@ class IntroRegisterScreen extends StatelessWidget {
               TyperAnimatedText("Welcome !",
                   textStyle: Theme.of(context).textTheme.headline2,
                   speed: const Duration(milliseconds: 100)),
-              TyperAnimatedText("WE are Happy to have you",
+              TyperAnimatedText("We are Happy to have you",
                   textStyle: Theme.of(context).textTheme.headline2,
                   speed: const Duration(milliseconds: 100)),
               TyperAnimatedText("How would you like to Register ?",

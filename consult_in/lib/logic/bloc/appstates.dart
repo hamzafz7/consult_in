@@ -30,3 +30,9 @@ class ErrorUserRegisterState extends ConsultAppStates {
   final error;
   ErrorUserRegisterState(this.error);
 }
+
+class GetExpertsLoadingState extends ConsultAppStates {}
+
+class GetExpertsSuccessState extends ConsultAppStates {}
+
+class GetExpertsErrorState extends ConsultAppStates {}
