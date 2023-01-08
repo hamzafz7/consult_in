@@ -3,7 +3,9 @@ import 'package:bloc/bloc.dart';
 import 'package:consult_in/data/diohelper/diohelper.dart';
 import 'package:consult_in/data/models/expertmodel.dart';
 import 'package:consult_in/data/models/homeloginmodel.dart';
+import 'package:consult_in/data/models/searchexpertmodel.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../components/endpoints.dart';
 
@@ -22,7 +24,7 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
     await DioHelper.post(
         url: login,
         query: {"email": email, "password": password}).then((value) {
-      homeloginmodel = HomeLoginModel.fromJson(jsonDecode((value.data)));
+      homeloginmodel = HomeLoginModel.fromJson((value.data));
       // print(value.data);
       print(homeloginmodel!.message);
       emit(SuccessLoginState());
@@ -97,13 +99,12 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
 
   List<ExpertModel> exp_experts = [];
   getexperts(int id) async {
+    exp_experts = [];
     emit(GetExpertsLoadingState());
     return await DioHelper.get(url: experts, query: {"experience_id": id})
         .then((value) {
       var coded = value.data;
-      //  print(value.data);
-      //   List<Map<String, dynamic>> coded = jsonDecode(value.data.toString());
-      // print(coded);
+      if (value.data == "") {}
       coded.forEach((e) {
         exp_experts.add(ExpertModel.fromJson(e));
       });
@@ -112,6 +113,30 @@ class ConsultAppCubit extends Cubit<ConsultAppStates> {
     }).onError((error, stackTrace) {
       print(error.toString());
       emit(GetExpertsErrorState());
+    });
+  }
+
+  SearchModel? searchModel;
+  searchexpert(String name) async {
+    emit(SearchExpertsLoadingState());
+    await DioHelper.get(url: search, query: {"name": name}).then((value) {
+      searchModel = SearchModel.fromJson(value.data);
+      emit(SearchExpertsSuccessState());
+    }).onError((error, stackTrace) {
+      print(error.toString());
+      emit(SearchExpertsErrorState());
+    });
+  }
+
+  logout({required String token}) async {
+    emit(LoadingLogoutState());
+    return await DioHelper.post(url: Logout, header: {
+      "Accept": 'application/json',
+      "Authentication": "Bearer $token"
+    }).then((value) {
+      emit(SuccessLogoutState());
+    }).onError((error, stackTrace) {
+      emit(ErrorLogoutState(error));
     });
   }
 }
