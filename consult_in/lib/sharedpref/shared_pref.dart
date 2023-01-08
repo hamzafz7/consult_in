@@ -31,4 +31,8 @@ class SharedPref {
   static int? getint({required String key}) {
     return sharedPreferences!.getInt(key);
   }
+
+  static Future<bool> delete(String key) async {
+    return await sharedPreferences!.remove(key);
+  }
 }

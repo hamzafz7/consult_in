@@ -5,7 +5,6 @@ import 'package:consult_in/presentation/screens/auth/expert_register.dart';
 import 'package:consult_in/presentation/screens/IntroRegisterScreen/intro_register.dart';
 import 'package:consult_in/presentation/screens/auth/log_in.dart';
 import 'package:consult_in/presentation/screens/auth/user_register.dart';
-import 'package:consult_in/presentation/screens/expertsscreen/experts_screen.dart';
 import 'package:consult_in/presentation/screens/homescreen/home_screen.dart';
 import 'package:consult_in/presentation/screens/splashscreen/splash_screen.dart';
 import 'package:consult_in/sharedpref/shared_pref.dart';

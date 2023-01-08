@@ -2,6 +2,8 @@ import 'package:consult_in/components/constants.dart';
 import 'package:consult_in/components/theme.dart';
 import 'package:consult_in/logic/bloc/appcubit.dart';
 import 'package:consult_in/logic/bloc/appstates.dart';
+import 'package:consult_in/presentation/screens/accountscreen/accounts_screen.dart';
+import 'package:consult_in/presentation/screens/resultscreen/result_search.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -143,6 +145,17 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ]),
                     child: TextFormField(
+                      onFieldSubmitted: (val) {
+                        if (val != null) {
+                          BlocProvider.of<ConsultAppCubit>(context)
+                              .searchexpert(val);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: ((context) =>
+                                      const ResaultScreen())));
+                        }
+                      },
                       decoration: const InputDecoration(
                         border: InputBorder.none,
                         hintText: 'Search ...',
@@ -201,7 +214,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   print(indexx);
                 },
                 padding: const EdgeInsets.all(8),
-                tabs: const [
+                tabs: [
                   GButton(
                     icon: Icons.home_outlined,
                     text: 'Home',
@@ -211,6 +224,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     text: 'Favorites',
                   ),
                   GButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: ((context) => const AccountScreen())));
+                    },
                     icon: Icons.person_outline,
                     text: 'Account',
                   ),
@@ -231,5 +250,6 @@ Widget setphoto() {
     );
   }
 
-  return Image.asset("assets/images/loginpic.png");
+  return CircleAvatar(
+      backgroundImage: AssetImage("assets/images/loginpic.png"));
 }

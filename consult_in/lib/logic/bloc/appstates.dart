@@ -36,3 +36,18 @@ class GetExpertsLoadingState extends ConsultAppStates {}
 class GetExpertsSuccessState extends ConsultAppStates {}
 
 class GetExpertsErrorState extends ConsultAppStates {}
+
+class SearchExpertsLoadingState extends ConsultAppStates {}
+
+class SearchExpertsSuccessState extends ConsultAppStates {}
+
+class SearchExpertsErrorState extends ConsultAppStates {}
+
+class LoadingLogoutState extends ConsultAppStates {}
+
+class SuccessLogoutState extends ConsultAppStates {}
+
+class ErrorLogoutState extends ConsultAppStates {
+  final error;
+  ErrorLogoutState(this.error);
+}

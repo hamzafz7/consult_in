@@ -21,7 +21,7 @@ Widget getwidthspace(double w) {
 }
 
 gotonextpage(context, String name) {
-  Navigator.pushNamed(context, name);
+  Navigator.pushReplacementNamed(context, name);
 }
 
 var h, w;
@@ -53,7 +53,7 @@ Widget CategoryItemBuilder(String img, String text, context, index) {
   return GestureDetector(
     onTap: () {
       BlocProvider.of<ConsultAppCubit>(context).getexperts(index + 1);
-      Navigator.pushReplacement(
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: ((context) =>
@@ -90,7 +90,7 @@ Widget CategoryItemBuilder(String img, String text, context, index) {
                   style: const TextStyle(
                     color: Color(0xff057c82),
                     letterSpacing: 2,
-                    fontSize: 15,
+                    fontSize: 14,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
@@ -117,3 +117,7 @@ List categories_id = [1, 2, 3, 4, 5];
 String username = SharedPref.getstring(key: "username") ?? "";
 String userphoto = SharedPref.getstring(key: "userphoto") ?? "";
 String userrole = SharedPref.getstring(key: "userrole") ?? "";
+String token = SharedPref.getstring(key: "token") ?? "";
+int role = SharedPref.getint(key: "role") ?? -1;
+int id = SharedPref.getint(key: "id") ?? -1;
+int wallet = SharedPref.getint(key: "wallet") ?? -1;

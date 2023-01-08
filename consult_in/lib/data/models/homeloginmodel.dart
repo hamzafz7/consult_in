@@ -19,7 +19,7 @@ class HomeLoginUserDataModel {
   String? email;
   String? photo_path;
   int? wallet;
-  String? role;
+  int? role;
   String? address;
   HomeLoginUserDataModel.fromJson(Map<String?, dynamic> json) {
     id = json["id"];

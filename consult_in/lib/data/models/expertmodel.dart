@@ -1,5 +1,5 @@
 class ExpertModel {
-  int? userid;
+  int? expertid;
   String? name;
   int? experience_exp_id;
   var description;
@@ -9,7 +9,7 @@ class ExpertModel {
   String? email;
   String? phone;
   ExpertModel.fromJson(Map<String?, dynamic> json) {
-    userid = json["user_id"];
+    expertid = json["expert_id"];
     name = json["name"];
     experience_exp_id = json["experience_expert_id"];
     description = json["description"];

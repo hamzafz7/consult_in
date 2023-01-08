@@ -31,6 +31,31 @@ class _SignupScreenState extends State<SignupScreen> {
                 .homeloginmodel!
                 .user!
                 .name!);
+        await SharedPref.setstring(
+            key: "userphoto",
+            value: BlocProvider.of<ConsultAppCubit>(context)
+                .homeloginmodel!
+                .user!
+                .photo_path!);
+        await SharedPref.setstring(
+            key: "token",
+            value: BlocProvider.of<ConsultAppCubit>(context)
+                .homeloginmodel!
+                .access_token!);
+        await SharedPref.setint(
+            key: "role",
+            value: BlocProvider.of<ConsultAppCubit>(context)
+                .homeloginmodel!
+                .user!
+                .role!);
+        await SharedPref.setint(
+            key: "id",
+            value: BlocProvider.of<ConsultAppCubit>(context)
+                .homeloginmodel!
+                .user!
+                .id!);
+        await SharedPref.setint(key: "wallet", value: 30000);
+
         gotonextpage(context, "homescreen");
       },
       builder: (context, state) {

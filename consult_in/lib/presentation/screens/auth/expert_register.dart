@@ -72,6 +72,24 @@ class _SignupexpertScreenState extends State<SignupexpertScreen> {
                     .homeloginmodel!
                     .user!
                     .photo_path!);
+            await SharedPref.setstring(
+                key: "token",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .access_token!);
+            await SharedPref.setint(
+                key: "role",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .user!
+                    .role!);
+            await SharedPref.setint(
+                key: "id",
+                value: BlocProvider.of<ConsultAppCubit>(context)
+                    .homeloginmodel!
+                    .user!
+                    .id!);
+            await SharedPref.setint(key: "wallet", value: 3000);
           }
 
           gotonextpage(context, "homescreen");
